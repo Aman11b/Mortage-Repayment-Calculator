@@ -1,5 +1,5 @@
 import type React from "react";
-import type { FieldError } from "react-hook-form";
+import type { FieldError, UseFormRegisterReturn } from "react-hook-form";
 
 export type InputFieldProps = {
   label: string;
@@ -9,11 +9,24 @@ export type InputFieldProps = {
 };
 
 export type RadioOptionProps = {
-  name: string;
-  value: string;
+  value: "repayment" | "interestOnly";
   children: React.ReactNode;
+  register: UseFormRegisterReturn;
+  error?: FieldError;
 };
 
 export type FormValue = {
   amount: number;
+  term: number;
+  intrestRate: number;
+  mortgagteType: "repayment" | "intrestOnly";
+};
+
+export type MortgageResult = {
+  monthlyRepayment: number;
+  totalRepayment: number;
+};
+
+export type ResultProp = {
+  result: MortgageResult | null;
 };

@@ -7,13 +7,15 @@ export default function InputField({
   error,
 }: InputFieldProps) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 ">
       <label htmlFor={htmlFor} className="text-sm font-medium text-slate-500">
         {label}
       </label>
       <div
         className={`group flex overflow-hidden rounded-md border ${
-          error ? "border-red " : "bg-slate-50 focus-within:border-lime "
+          error
+            ? "border-red "
+            : "bg-slate-50 border-slate-300 focus-within:border-lime "
         } `}
       >
         {children}
