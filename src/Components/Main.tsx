@@ -2,22 +2,42 @@ import InputField from "../ui/InputField";
 import RadioOptions from "../ui/RadioOptions";
 import calculatorIcon from "../../assets/images/icon-calculator.svg";
 import Result from "./Result";
+import { useForm } from "react-hook-form";
+import type { FormValue } from "../types/mortgage";
 
 export default function Main() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValue>();
+
+  const onSubmit = (data: FormValue) => {
+    console.log(data);
+  };
   return (
     <main className="min-h-screen bg-slate-100 flex items-center justify-center ">
       <article className="max-w-300 flex flex-row bg-slate-50  rounded-4xl">
-        <section className="flex flex-col py-10 px-8 gap-2">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col py-10 px-8 gap-2"
+        >
           {/* heading */}
-          <div className="flex justify-between items-center py-6">
+          <div className="flex justify-between items-center py-4">
             <h1 className="text-2xl font-bold text-slate-800">
               Mortgage Calculator
             </h1>
             <a className="underline text-slate-500 cursor-pointer">Clear All</a>
           </div>
           {/* Mortgage Amount */}
-          <InputField label=" Mortgame Amount" htmlFor="amount">
-            <span className="flex items-center bg-slate-100 px-4 font-semibold text-slate-600">
+          <InputField
+            label=" Mortgame Amount"
+            htmlFor="amount"
+            error={errors.amount}
+          >
+            <span
+              className={`flex items-center px-4 font-semibold  ${errors.amount ? "bg-red" : "bg-slate-100 group-focus-within:bg-lime"} `}
+            >
               $
             </span>
             <input
@@ -25,10 +45,18 @@ export default function Main() {
               type="number"
               placeholder="0"
               className="w-full px-4 py-3 outline-none"
+              {...register("amount", {
+                required: "This fied is required",
+                valueAsNumber: true,
+                min: {
+                  value: 0,
+                  message: "Amount should be positive",
+                },
+              })}
             />
           </InputField>
           {/* Mortgage Term & Interest */}
-          <div className="flex flex-row gap-4 py-4">
+          <div className="flex flex-row gap-4 py-2">
             <InputField label=" Mortgage Term" htmlFor="term">
               <input
                 id="term"
@@ -79,7 +107,7 @@ export default function Main() {
             </span>
             Calculate Repayments
           </button>
-        </section>
+        </form>
         <section className="flex flex-col gap-2 rounded-r-4xl overflow-hidden rounded-bl-[4rem]">
           <Result />
         </section>
