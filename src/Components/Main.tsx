@@ -38,20 +38,20 @@ export default function Main() {
 
   return (
     <main className="min-h-screen bg-slate-100 flex items-center justify-center ">
-      <article className="max-w-300 flex flex-row bg-slate-50  rounded-4xl">
+      <article className="max-w-300 flex flex-col md:flex-row bg-slate-50  md:rounded-4xl">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col py-10 px-8 gap-2"
         >
           {/* heading */}
-          <div className="flex justify-between items-center py-4">
+          <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center py-4">
             <h1 className="text-2xl font-bold text-slate-800">
               Mortgage Calculator
             </h1>
             <button
               type="button"
               onClick={handleClear}
-              className="cursor-pointer underline text-slate-500"
+              className="cursor-pointer underline text-slate-500 pt-2"
             >
               Clear All
             </button>
@@ -83,7 +83,7 @@ export default function Main() {
             />
           </InputField>
           {/* Mortgage Term & Interest */}
-          <div className="flex flex-row gap-4 py-2">
+          <div className="flex flex-col md:flex-row gap-2 md:gap-4 py-2">
             <InputField
               label=" Mortgage Term"
               htmlFor="term"
@@ -183,7 +183,7 @@ export default function Main() {
             Calculate Repayments
           </button>
         </form>
-        <section className="flex flex-col gap-2 rounded-r-4xl overflow-hidden rounded-bl-[4rem]">
+        <section className="flex flex-col gap-2 md:rounded-r-4xl overflow-hidden md:rounded-bl-[4rem]">
           {result ? <Result result={result} /> : <EmptyResult />}
         </section>
       </article>
