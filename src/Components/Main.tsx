@@ -1,14 +1,18 @@
 import InputField from "../ui/InputField";
 import RadioOptions from "../ui/RadioOptions";
 import calculatorIcon from "../../assets/images/icon-calculator.svg";
+import Result from "./Result";
+
 export default function Main() {
   return (
     <main className="min-h-screen bg-slate-100 flex items-center justify-center ">
-      <article className="w-fit bg-slate-50 py-10 px-8 rounded-4xl">
-        <section className="flex flex-col gap-2">
+      <article className="max-w-300 flex flex-row bg-slate-50  rounded-4xl">
+        <section className="flex flex-col py-10 px-8 gap-2">
           {/* heading */}
           <div className="flex justify-between items-center py-6">
-            <h1 className="text-3xl font-bold"> Mortgage Calculator</h1>
+            <h1 className="text-2xl font-bold text-slate-800">
+              Mortgage Calculator
+            </h1>
             <a className="underline text-slate-500 cursor-pointer">Clear All</a>
           </div>
           {/* Mortgage Amount */}
@@ -76,8 +80,9 @@ export default function Main() {
             Calculate Repayments
           </button>
         </section>
-
-        <section></section>
+        <section className="flex flex-col gap-2 rounded-r-4xl overflow-hidden rounded-bl-[4rem]">
+          <Result />
+        </section>
       </article>
     </main>
   );
