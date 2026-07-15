@@ -3,7 +3,7 @@ import { formatCurrency } from "../utils/formatCurrency";
 
 export default function Result({ result }: ResultProp) {
   return (
-    <div className="bg-slate-950 py-16 px-8 h-full flex  flex-col gap-6">
+    <div className="bg-slate-950 px-6 py-8 md:px-8 md:py-16 h-full flex  flex-col gap-6">
       <h2 className="text-2xl font-bold text-slate-100"> Your results</h2>
       <p className="max-w-[35ch] text-slate-300 ">
         Your results are shown below based on the information you provided. To

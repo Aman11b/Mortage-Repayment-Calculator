@@ -19,7 +19,7 @@ export type FormValue = {
   amount: number;
   term: number;
   intrestRate: number;
-  mortgagteType: "repayment" | "intrestOnly";
+  mortgageType: "repayment" | "interestOnly";
 };
 
 export type MortgageResult = {

@@ -3,13 +3,15 @@ import RadioOptions from "../ui/RadioOptions";
 import calculatorIcon from "../../assets/images/icon-calculator.svg";
 import Result from "./Result";
 import { useForm } from "react-hook-form";
-import { type MortgageResult, type FormValue } from "../types/mortgage";
+
 import { useState } from "react";
-import {
-  calculateIntrestOnlyMortgage,
-  calculateRepaymentMortgage,
-} from "../utils/mortgage";
+
 import EmptyResult from "./EmptyResult";
+import type { FormValue, MortgageResult } from "../types/mortgage";
+import {
+  calculateIntrestOnlyMortgagte,
+  calculateRepaymentMortgagte,
+} from "../utils/mortgage";
 
 export default function Main() {
   const [result, setResult] = useState<MortgageResult | null>(null);
@@ -18,45 +20,49 @@ export default function Main() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormValue>();
+  } = useForm<FormValue>({
+    defaultValues: {
+      mortgageType: "repayment",
+    },
+  });
 
   const handleClear = () => {
     reset();
     setResult(null);
   };
   const onSubmit = (data: FormValue) => {
-    if (data.mortgagteType === "repayment") {
+    if (data.mortgageType === "repayment") {
       setResult(
-        calculateRepaymentMortgage(data.amount, data.term, data.intrestRate),
+        calculateRepaymentMortgagte(data.amount, data.term, data.intrestRate),
       );
     } else {
       setResult(
-        calculateIntrestOnlyMortgage(data.amount, data.term, data.intrestRate),
+        calculateIntrestOnlyMortgagte(data.amount, data.term, data.intrestRate),
       );
     }
   };
 
   return (
-    <main className="min-h-screen bg-slate-100 flex items-center justify-center ">
-      <article className="max-w-300 flex flex-col md:flex-row bg-slate-50  md:rounded-4xl">
+    <main className="min-h-screen bg-slate-100 flex items-center justify-center md:p-8">
+      <article className="max-w-300 flex flex-col md:flex-row bg-slate-50  md:rounded-4xl w-full overflow-hidden">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col py-10 px-8 gap-2"
+          className="flex flex-col px-6 py-8 md:px-8 md:py-10 gap-2 md:w-1/2"
         >
           {/* heading */}
-          <div className="flex flex-col items-start md:flex-row md:justify-between md:items-center py-4">
+          <div className="flex flex-col gap-2 items-start md:flex-row md:justify-between md:items-center py-4">
             <h1 className="text-2xl font-bold text-slate-800">
-              Mortgage Calculator
+              Mortgagte Calculator
             </h1>
             <button
               type="button"
               onClick={handleClear}
-              className="cursor-pointer underline text-slate-500 pt-2"
+              className="cursor-pointer underline text-slate-500 "
             >
               Clear All
             </button>
           </div>
-          {/* Mortgage Amount */}
+          {/* Mortgagte Amount */}
           <InputField
             label=" Mortgame Amount"
             htmlFor="amount"
@@ -70,29 +76,32 @@ export default function Main() {
             <input
               id="amount"
               type="number"
-              placeholder="0"
+              placeholder="300,000"
+              autoFocus
+              onWheel={(e) => e.currentTarget.blur()}
               className="w-full px-4 py-3 outline-none"
               {...register("amount", {
                 required: "This fied is required",
                 valueAsNumber: true,
                 min: {
-                  value: 0,
-                  message: "Amount should be positive",
+                  value: 1,
+                  message: "Amount must be greater than zero",
                 },
               })}
             />
           </InputField>
-          {/* Mortgage Term & Interest */}
-          <div className="flex flex-col md:flex-row gap-2 md:gap-4 py-2">
+          {/* Mortgagte Term & Interest */}
+          <div className="flex flex-col md:flex-row gap-4 py-2">
             <InputField
-              label=" Mortgage Term"
+              label=" Mortgagte Term"
               htmlFor="term"
               error={errors.term}
             >
               <input
                 id="term"
                 type="number"
-                placeholder="0"
+                placeholder="25"
+                onWheel={(e) => e.currentTarget.blur()}
                 className="w-full px-4 py-3 outline-none"
                 {...register("term", {
                   required: "This field is required",
@@ -121,17 +130,19 @@ export default function Main() {
               <input
                 id="rate"
                 type="number"
-                placeholder="0 %"
+                step="0.01"
+                placeholder="5.53"
+                onWheel={(e) => e.currentTarget.blur()}
                 className="w-full px-4 py-3 outline-none"
                 {...register("intrestRate", {
                   required: "This filed is required",
                   valueAsNumber: true,
                   min: {
-                    value: 0,
-                    message: "Interest reate cannot be nagative",
+                    value: 0.01,
+                    message: "Interest rate must be greater than 0",
                   },
                   max: {
-                    value: 100,
+                    value: 50,
                     message: "Interest rate is invalid",
                   },
                 })}
@@ -146,31 +157,31 @@ export default function Main() {
           {/* radio button */}
           <div className="flex flex-col gap-2">
             <h2 className="text-sm font-medium text-slate-500">
-              Mortgage Type
+              Mortgagte Type
             </h2>
             <RadioOptions
               value="repayment"
-              register={register("mortgagteType", {
-                required: "Please select a mortgage Type",
+              register={register("mortgageType", {
+                required: "Please select a mortgagte Type",
               })}
             >
               Repayment
             </RadioOptions>
             <RadioOptions
               value="interestOnly"
-              register={register("mortgagteType")}
+              register={register("mortgageType")}
             >
               Interest Only
             </RadioOptions>
 
             <p className=" h-5 text-sm text-red font-semibold">
-              {errors?.mortgagteType?.message}
+              {errors?.mortgageType?.message}
             </p>
           </div>
           {/* calculate button */}
           <button
             type="submit"
-            className="mt-8 flex flex-row w-fit items-center gap-3 rounded-full bg-lime px-8 py-4 font-bold text-slate-900 transition hover:opacity-90"
+            className="mt-8 flex flex-row w-full md:w-fit items-center gap-3 rounded-full bg-lime px-8 py-4 font-bold text-slate-900 transition hover:opacity-90 hover:bg-lime-200"
           >
             <span>
               <img
@@ -183,7 +194,7 @@ export default function Main() {
             Calculate Repayments
           </button>
         </form>
-        <section className="flex flex-col gap-2 md:rounded-r-4xl overflow-hidden md:rounded-bl-[4rem]">
+        <section className="flex flex-col gap-2 md:rounded-r-4xl overflow-hidden md:rounded-bl-[4rem] md:w-1/2">
           {result ? <Result result={result} /> : <EmptyResult />}
         </section>
       </article>
