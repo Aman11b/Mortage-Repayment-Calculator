@@ -9,8 +9,8 @@ import { useState } from "react";
 import EmptyResult from "./EmptyResult";
 import type { FormValue, MortgageResult } from "../types/mortgage";
 import {
-  calculateIntrestOnlyMortgagte,
-  calculateRepaymentMortgagte,
+  calculateInterestOnlyMortgage,
+  calculateRepaymentMortgage,
 } from "../utils/mortgage";
 
 export default function Main() {
@@ -33,11 +33,15 @@ export default function Main() {
   const onSubmit = (data: FormValue) => {
     if (data.mortgageType === "repayment") {
       setResult(
-        calculateRepaymentMortgagte(data.amount, data.term, data.intrestRate),
+        calculateRepaymentMortgage(data.amount, data.term, data.interestRate),
       );
     } else {
       setResult(
-        calculateIntrestOnlyMortgagte(data.amount, data.term, data.intrestRate),
+        calculateInterestOnlyMortgage(
+          data.amount,
+          data.term,
+          data.interestRate,
+        ),
       );
     }
   };
@@ -52,7 +56,7 @@ export default function Main() {
           {/* heading */}
           <div className="flex flex-col gap-2 items-start md:flex-row md:justify-between md:items-center py-4">
             <h1 className="text-2xl font-bold text-slate-800">
-              Mortgagte Calculator
+              Mortgage Calculator
             </h1>
             <button
               type="button"
@@ -64,7 +68,7 @@ export default function Main() {
           </div>
           {/* Mortgagte Amount */}
           <InputField
-            label=" Mortgame Amount"
+            label="Mortgage Amount"
             htmlFor="amount"
             error={errors.amount}
           >
@@ -81,7 +85,7 @@ export default function Main() {
               onWheel={(e) => e.currentTarget.blur()}
               className="w-full px-4 py-3 outline-none"
               {...register("amount", {
-                required: "This fied is required",
+                required: "This field is required",
                 valueAsNumber: true,
                 min: {
                   value: 1,
@@ -93,7 +97,7 @@ export default function Main() {
           {/* Mortgagte Term & Interest */}
           <div className="flex flex-col md:flex-row gap-4 py-2">
             <InputField
-              label=" Mortgagte Term"
+              label="Mortgage Term"
               htmlFor="term"
               error={errors.term}
             >
@@ -125,7 +129,7 @@ export default function Main() {
             <InputField
               label=" Interest Rate"
               htmlFor="rate"
-              error={errors.intrestRate}
+              error={errors.interestRate}
             >
               <input
                 id="rate"
@@ -134,8 +138,8 @@ export default function Main() {
                 placeholder="5.53"
                 onWheel={(e) => e.currentTarget.blur()}
                 className="w-full px-4 py-3 outline-none"
-                {...register("intrestRate", {
-                  required: "This filed is required",
+                {...register("interestRate", {
+                  required: "This field is required",
                   valueAsNumber: true,
                   min: {
                     value: 0.01,
@@ -148,7 +152,7 @@ export default function Main() {
                 })}
               />
               <span
-                className={`flex items-center px-4 font-semibold   ${errors.intrestRate ? "bg-red text-slate-50" : "bg-slate-100 group-focus-within:bg-lime text-slate-600"} `}
+                className={`flex items-center px-4 font-semibold   ${errors.interestRate ? "bg-red text-slate-50" : "bg-slate-100 group-focus-within:bg-lime text-slate-600"} `}
               >
                 %
               </span>
@@ -162,7 +166,7 @@ export default function Main() {
             <RadioOptions
               value="repayment"
               register={register("mortgageType", {
-                required: "Please select a mortgagte Type",
+                required: "Please select a mortgage type",
               })}
             >
               Repayment

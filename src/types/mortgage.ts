@@ -18,7 +18,7 @@ export type RadioOptionProps = {
 export type FormValue = {
   amount: number;
   term: number;
-  intrestRate: number;
+  interestRate: number;
   mortgageType: "repayment" | "interestOnly";
 };
 

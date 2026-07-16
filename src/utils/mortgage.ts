@@ -1,6 +1,6 @@
 import type { MortgageResult } from "../types/mortgage";
 
-export function calculateRepaymentMortgagte(
+export function calculateRepaymentMortgage(
   amount: number,
   years: number,
   annualRate: number,
@@ -18,7 +18,7 @@ export function calculateRepaymentMortgagte(
     totalRepayment,
   };
 }
-export function calculateIntrestOnlyMortgagte(
+export function calculateInterestOnlyMortgage(
   amount: number,
   years: number,
   annualRate: number,
